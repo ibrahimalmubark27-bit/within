@@ -1,0 +1,148 @@
+@import "tailwindcss";
+
+@custom-variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
+
+@theme {
+  --color-powder: #cbd9e6;
+  --color-alabaster: #f9f8f6;
+  --color-espresso: #3c2424;
+  --color-butter: #faeba6;
+  --color-line: rgba(60, 36, 36, 0.1);
+
+  --font-display: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+  --font-script: "Pinyon Script", "Cormorant Garamond", cursive;
+  --font-wordmark: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[dir="rtl"] {
+  --font-display: "Amiri", "IBM Plex Sans Arabic", serif;
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
+}
+
+html {
+  background: #f9f8f6;
+  color: #3c2424;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  background: #f9f8f6;
+  color: #3c2424;
+}
+
+[dir="rtl"] body {
+  letter-spacing: 0;
+}
+
+/* Arabic must never be letter-spaced (breaks joining) */
+[dir="rtl"] [class*="tracking-"]:not(.keep-tracking) {
+  letter-spacing: 0 !important;
+}
+
+::selection {
+  background: #faeba6;
+  color: #3c2424;
+}
+
+/* Editorial accent: italic in EN, Ruqaa calligraphy in AR */
+.accent {
+  font-style: italic;
+}
+[dir="rtl"] .accent {
+  font-style: normal;
+  font-family: "Aref Ruqaa", "Amiri", serif;
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+}
+[dir="rtl"] .eyebrow {
+  font-size: 13px;
+  letter-spacing: 0;
+}
+
+/* Elegant focus */
+:focus {
+  outline: none;
+}
+:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 3px #faeba6,
+    0 0 0 3.5px rgba(60, 36, 36, 0.35);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Marquee */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee {
+  animation: marquee 48s linear infinite;
+}
+[dir="rtl"] .marquee {
+  animation-direction: reverse;
+}
+
+/* Subtle grain overlay for editorial texture */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+input,
+textarea {
+  font: inherit;
+  letter-spacing: inherit;
+}
+input::placeholder,
+textarea::placeholder {
+  color: rgba(60, 36, 36, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    animation: none;
+  }
+}
